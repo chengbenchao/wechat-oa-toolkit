@@ -251,6 +251,71 @@ tk = WeChatOAToolkit(appid="wx...", secret="...")
 
 但你完全可以独立使用 `wechat_oa_toolkit.py`，不依赖 WorkBuddy。
 
+---
+
+## 🖥️ 另一台机器快速复现（自动安装）
+
+### 方案一：全自动（推荐，需 WorkBuddy）
+
+在新机器上打开 WorkBuddy，对 AI 说：
+
+```
+安装 wechat-official-account-expert 专家包，
+然后配置环境变量 WECHAT_APPID=xxx 和 WECHAT_SECRET=xxx
+```
+
+WorkBuddy 会：
+1. 自动安装专家包（含所有 skill）
+2. 引导你配置环境变量
+3. 提示你添加 IP 白名单
+
+> ⚠️ 如果专家包已发布到推荐市场，可直接用 `/install-skill wechat-official-account-expert` 一键安装。
+
+### 方案二：半自动（专家包已导出）
+
+如果你有专家包的导出文件（`.skill` 格式）：
+
+```bash
+# 在 WorkBuddy 中执行
+/import-expert /path/to/wechat-official-account-expert.skill
+```
+
+导入后重启 WorkBuddy 即可生效。
+
+### 方案三：纯手动（无 WorkBuddy）
+
+```bash
+# 1. 克隆仓库
+git clone https://github.com/chengbenchao/wechat-oa-toolkit.git
+cd wechat-oa-toolkit
+
+# 2. 配置环境变量
+cp .env.example .env
+# 编辑 .env 填入 WECHAT_APPID 和 WECHAT_SECRET
+
+# 3. 在微信公众平台添加本机 IP 到白名单
+# mp.weixin.qq.com → 设置与开发 → 基本配置 → IP白名单
+
+# 4. 直接运行（无需安装任何依赖）
+python3 wechat_oa_toolkit.py \
+  --title "文章标题" \
+  --digest "文章摘要" \
+  --content-file article.html \
+  --cover-image cover.png
+```
+
+---
+
+## 📦 导出专家包（供方案二使用）
+
+在已安装好专家包的机器上，让 WorkBuddy 执行：
+
+```
+用 expert-manager 导出 wechat-official-account-expert 专家包
+```
+
+导出文件可拷贝到另一台机器导入，实现完全离线安装。
+
 ## 📄 License
 
 MIT License - 自由使用、修改和分发
